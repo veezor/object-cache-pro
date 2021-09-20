@@ -1,0 +1,70 @@
+
+<div id="debug-bar-object-cache-insights">
+
+    <h2><span>Hit Ratio:</span> <?php echo $this->info->ratio; ?>%</h2>
+    <h2><span>Hits:</span> <?php echo number_format_i18n($this->info->hits); ?></h2>
+    <h2><span>Misses:</span> <?php echo number_format_i18n($this->info->misses); ?></h2>
+
+    <?php if (isset($this->info->prefetches)) : ?>
+        <h2><span>Prefetches:</span> <?php echo number_format_i18n($this->info->prefetches); ?></h2>
+    <?php endif; ?>
+
+    <h2><span>Size:</span> <?php echo size_format($this->info->bytes, 2); ?></h2>
+
+    <div style="clear: both;"></div>
+
+    <?php if (! empty($this->info->groups->cache)) : ?>
+
+        <h3>Cache Groups</h3>
+
+        <ul style="font-family: monospace;">
+
+            <?php foreach ($this->info->groups->cache as $group => $data): ?>
+
+                <?php
+                    printf(
+                        '<li>%s: %s %s (%s)</li>',
+                        esc_html($group),
+                        esc_html($data['keys']),
+                        $data['keys'] > 1 ? 'keys' : 'key',
+                        size_format($data['bytes'])
+                    );
+                ?>
+
+            <?php endforeach; ?>
+
+        </ul>
+
+    <?php endif; ?>
+
+    <?php if (! empty($logs)) : ?>
+
+        <h3>Logs</h3>
+
+        <div style="font-family: monospace;">
+
+            <?php foreach ($logs as $message) : ?>
+
+                <?php
+                    printf(
+                        '<p style="background: #e8e8e8; padding: 4px 8px; margin-bottom: 8px; word-break: break-all;">%s: %s</p>',
+                        strtoupper($message['level']),
+                        esc_html(
+                            strlen($message['message']) > 400
+                                ? substr($message['message'], 0, 400) . '...'
+                                : $message['message']
+                        )
+                    );
+                ?>
+
+                <?php if (isset($message['context']['backtrace_summary'])): ?>
+                    <p><?php echo esc_html($message['context']['backtrace_summary']); ?></p>
+                <?php endif; ?>
+
+            <?php endforeach; ?>
+
+        </div>
+
+    <?php endif; ?>
+
+</div>

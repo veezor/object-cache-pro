@@ -1,0 +1,58 @@
+
+<div id="debug-bar-object-cache">
+
+    <h2>
+        <span>Status</span> <?php echo $diagnostics['general']['status']->html; ?>
+    </h2>
+
+    <h2>
+        <span>Drop-in</span> <?php echo $diagnostics['general']['dropin']->html; ?>
+    </h2>
+
+    <?php if ($diagnostics['general']['eviction-policy']->value) : ?>
+
+    <h2>
+        <span>Eviction Policy</span> <?php echo $diagnostics['general']['eviction-policy']->html; ?>
+    </h2>
+
+    <?php endif; ?>
+
+    <h2>
+        <span>Errors</span> <?php echo count($diagnostics['Errors'] ?? []); ?>
+    </h2>
+
+    <div style="clear: both;"></div>
+
+    <?php foreach ($diagnostics as $group => $data) : ?>
+
+        <?php if (empty($data)) : continue; endif; ?>
+
+        <h3><?php echo ucfirst($group); ?></h3>
+
+        <div style="font-family: monospace;">
+
+            <?php foreach ($data as $key => $diagnostic) : ?>
+
+            	<?php if ($group === 'errors') : ?>
+
+                    <?php printf(
+                        '<p style="color: #d54e21;">%s</p>',
+                        esc_html($diagnostic)
+                    ); ?>
+
+            	<?php else : ?>
+
+            		<?php printf(
+                        '<p style="margin: 0;">%s: %s</p>',
+                        $diagnostic->name,
+                        $diagnostic->withComment()->html
+                    ); ?>
+
+            	<?php endif; ?>
+
+            <?php endforeach; ?>
+
+        </div>
+
+    <?php endforeach; ?>
+ </div>

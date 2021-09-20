@@ -1,0 +1,57 @@
+{
+    "name": "veezor/object_cache_pro",
+    "description": "A business class Redis object cache backend for WordPress.",
+    "homepage": "https://objectcache.pro",
+    "type": "wordpress-plugin",
+    "license": "proprietary",
+    "authors": [
+        {
+            "name": "Till Krüss",
+            "homepage": "https://till.im/"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php": "^7.0 || ^8.0",
+        "ext-redis": "^3.1.1 || ^4.0 || ^5.0",
+        "composer/installers": "~1.0"
+    },
+    "require-dev": {
+        "fabpot/goutte": "^3.2",
+        "friendsofphp/php-cs-fixer": "^2.17",
+        "mockery/mockery": "^1.2",
+        "phpbench/phpbench": "^0.16.10 || ^1.0.0-alpha3",
+        "phpunit/phpunit": "^7.0 || ^8.0",
+        "squizlabs/php_codesniffer": "^3.5",
+        "szepeviktor/phpstan-wordpress": "^0.7.1",
+        "wp-cli/wp-cli-bundle": "^2.3"
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "RedisCachePro\\": "src/",
+            "Tests\\": "tests/"
+        },
+        "classmap": [
+            "src/Extensions/Debugbar/Panel.php",
+            "src/Extensions/Debugbar/Insights.php",
+            "src/Extensions/Debugbar/Diagnostics.php"
+        ]
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "preferred-install": "dist",
+        "sort-packages": true
+    },
+    "prefer-stable": true,
+    "scripts": {
+        "test": "vendor/bin/phpunit --testdox",
+        "test:unit": "vendor/bin/phpunit --testdox --testsuite Unit --exclude Relay",
+        "test:http": "vendor/bin/phpunit --testdox --testsuite Feature",
+        "coverage:unit": "vendor/bin/phpunit --testsuite Unit  --exclude Relay --coverage-clover=coverage.xml",
+        "coverage:http": "vendor/bin/phpunit --testsuite Feature --coverage-clover=coverage.xml",
+        "style": "vendor/bin/php-cs-fixer fix --verbose --dry-run",
+        "style:fix": "vendor/bin/php-cs-fixer fix --verbose",
+	"lint": "vendor/bin/phpcs --no-cache --ignore=vendor --extensions=php --standard=PSR12 .",
+        "analyze": "vendor/bin/phpstan analyze"
+    }
+}

@@ -1,0 +1,166 @@
+
+<?php echo $this->before_non_tabular_output(); ?>
+
+    <section>
+        <h3>Status</h3>
+        <p class="qm-ltr">
+            <code><?php echo $data['status']; ?></code>
+        </p>
+    </section>
+
+    <section>
+        <h3>Hit Ratio</h3>
+        <p class="qm-ltr"><code><?php echo esc_html($data['ratio']); ?>%</code></p>
+    </section>
+
+    <section>
+        <h3>Hits</h3>
+        <p class="qm-ltr"><code><?php echo esc_html($data['hits']); ?></code></p>
+    </section>
+
+    <section>
+        <h3>Misses</h3>
+        <p class="qm-ltr"><code><?php echo esc_html($data['misses']); ?></code></p>
+    </section>
+
+    <?php if (isset($data['commands'])) : ?>
+        <section>
+            <h3>Commands</h3>
+            <p class="qm-ltr"><code><?php echo esc_html($data['commands']); ?></code></p>
+        </section>
+    <?php endif; ?>
+
+    <?php if (isset($data['prefetches'])) : ?>
+        <section>
+            <h3>Prefetches</h3>
+            <p class="qm-ltr"><code><?php echo esc_html($data['prefetches']); ?></code></p>
+        </section>
+    <?php endif; ?>
+
+    <section>
+        <h3>Size</h3>
+        <p class="qm-ltr"><code><?php echo size_format($data['bytes'], 2); ?></code></p>
+    </section>
+
+</div>
+
+<?php if (! empty($data['errors'])) : ?>
+    <div class="qm-boxed qm-boxed-wrap">
+
+        <section>
+            <h3>Errors</h3>
+
+            <table>
+                <tbody>
+                    <?php foreach ($data['errors'] as $error) : ?>
+                        <tr class="qm-warn">
+                            <td class="qm-ltr qm-wrap">
+                                <span class="dashicons dashicons-warning" aria-hidden="true"></span>
+                                <?php echo esc_html($error); ?>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        </section>
+
+    </div>
+<?php endif; ?>
+
+<div class="qm-boxed qm-boxed-wrap">
+
+    <?php if (! empty($data['groups']->cache)) : ?>
+
+        <section>
+            <h3>Groups</h3>
+
+            <table>
+                <tbody>
+                    <?php foreach ($data['groups']->cache as $group => $values) : ?>
+                        <tr>
+                            <th scope="row"><?php echo esc_html($group); ?></th>
+                            <td class="qm-ltr qm-wrap">
+                                <?php printf(
+                                    _n('%s key', '%s keys', $values['keys'], 'redis-cache-pro'),
+                                    number_format_i18n($values['keys'])
+                                ); ?>
+                                <span class="qm-info">
+                                    (<?php echo size_format($values['bytes']); ?>)
+                                </span>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        </section>
+
+    <?php endif; ?>
+
+    <?php if (! empty($data['groups']->global)) : ?>
+
+        <section>
+            <h3>Global Groups</h3>
+
+            <ul class="qm-ltr">
+                <?php foreach ($data['groups']->global as $group) : ?>
+                    <li>
+                        <?php echo esc_html($group); ?>
+                    </li>
+                <?php endforeach; ?>
+            </ul>
+        </section>
+
+    <?php endif; ?>
+
+    <?php if (! empty($data['groups']->non_persistent)) : ?>
+
+        <section>
+            <h3>Non-persistent Groups</h3>
+
+            <ul class="qm-ltr">
+                <?php foreach ($data['groups']->non_persistent as $group) : ?>
+                    <li>
+                        <?php echo esc_html($group); ?>
+                    </li>
+                <?php endforeach; ?>
+            </ul>
+        </section>
+
+    <?php endif; ?>
+
+    <?php if (! empty($data['groups']->non_prefetchable)) : ?>
+
+        <section>
+            <h3>Non-prefetchable Groups</h3>
+
+            <ul class="qm-ltr">
+                <?php foreach ($data['groups']->non_prefetchable as $group) : ?>
+                    <li>
+                        <?php echo esc_html($group); ?>
+                    </li>
+                <?php endforeach; ?>
+            </ul>
+        </section>
+
+    <?php endif; ?>
+
+    <?php if (! empty($data['meta'])) : ?>
+
+        <section>
+            <h3>Metadata</h3>
+
+            <table>
+                <tbody>
+                    <?php foreach ($data['meta'] as $label => $value) : ?>
+                        <tr>
+                            <th scope="row"><?php echo esc_html($label); ?></th>
+                            <td class="qm-ltr qm-wrap"><?php echo esc_html($value); ?></td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        </section>
+
+    <?php endif; ?>
+
+<?php echo $this->after_non_tabular_output(); ?>
