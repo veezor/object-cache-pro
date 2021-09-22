@@ -10,7 +10,7 @@
             "homepage": "https://till.im/"
         }
     ],
-    "minimum-stability": "master",
+    "minimum-stability": "dev-master",
     "require": {
         "php": "^7.0 || ^8.0",
         "ext-redis": "^3.1.1 || ^4.0 || ^5.0",
