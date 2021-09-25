@@ -1,5 +1,5 @@
 {
-    "name": "veezor/object_cache_pro",
+    "name": "veezor/object-cache-pro",
     "description": "A business class Redis object cache backend for WordPress.",
     "homepage": "https://objectcache.pro",
     "type": "wordpress-plugin",
